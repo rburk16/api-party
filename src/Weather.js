@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import { Route, NavLink } from 'react-router-dom'
 import './Weather.css'
-
+import WeatherCity from './WeatherCity'
 
 class Weather extends Component {
   state = {
-    zipCode: '',
+    city: '',
   }
 
   handleChange = (ev) => {
-        this.setState({ zipCode: ev.target.value })
+        this.setState({ city: ev.target.value })
     }
 
     handleSubmit = (ev) => {
         ev.preventDefault()
-        this.props.history.push(`/weather/${this.state.zipCode}`)
-        this.setState({ zipCode: '' })
+        this.props.history.push(`/weather/${this.state.city}`)
+        this.setState({ city: '' })
     }
 
   render = () => {
@@ -30,16 +30,17 @@ class Weather extends Component {
             <div>
                 <input
                     type="text"
-                    value={this.state.zipCode}
+                    value={this.state.city}
                     onChange={this.handleChange}
+                    placeholder="City Name"
                 />
             </div>
             <div>
                 <button type="submit">Look at your local weather</button>
             </div>
           </form>
-          
-          <Route exact path="/weather" render={() => <h3>Please enter a zip code to check the weather.</h3>} />
+          <Route path="/weather/:city" component={WeatherCity} />
+          <Route exact path="/weather" render={() => <h3>Please enter a city to check the weather.</h3>} />
         </div>
 
     )
@@ -47,6 +48,3 @@ class Weather extends Component {
 }
 
 export default Weather
-
-
-//<Route path="/weather/:SOMETHING GOES HERE" component={WeatherZip} />
